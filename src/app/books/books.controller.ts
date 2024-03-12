@@ -4,7 +4,11 @@ import { Request, Response } from "express";
 const prisma = new PrismaClient();
 
 const getAllBooks = async (req: Request, res: Response) => {
-  const books = await prisma.book.findMany({});
+  const books = await prisma.book.findMany({
+    include: {
+      author: true,
+    },
+  });
   res.status(200).json(books);
 };
 
@@ -18,11 +22,18 @@ const createBook = async (req: Request, res: Response) => {
       createdAt,
       authorId,
     },
-    include: {
-      author: true,
-    },
   });
-  return res.status(201).json(createdBook);
+  res.status(201).json(createdBook);
 };
 
-export const booksController = { getAllBooks, createBook };
+const deleteBook = async (req: Request, res: Response) => {
+  const { bookId } = req.params;
+  const deletedBook = await prisma.book.delete({
+    where: {
+      id: Number(bookId),
+    },
+  });
+  res.status(200).json(deletedBook);
+};
+
+export const booksController = { getAllBooks, createBook, deleteBook };
