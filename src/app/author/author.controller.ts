@@ -39,6 +39,7 @@ const updateAuthor = async (req: Request, res: Response) => {
     data: {
       dateOfBirth,
       name,
+      nationality,
     },
   });
   res.status(200).json(updatedAuthor);
