@@ -22,6 +22,6 @@ model Author {
   name          String
   nationality   String
   dateOfBirth   DateTime
-  numberOfBooks Int
+  numberOfBooks Int?     @default(0)
   Book          Book[]
 }

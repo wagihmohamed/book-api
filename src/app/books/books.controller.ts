@@ -18,6 +18,9 @@ const createBook = async (req: Request, res: Response) => {
       createdAt,
       authorId,
     },
+    include: {
+      author: true,
+    },
   });
   return res.status(201).json(createdBook);
 };

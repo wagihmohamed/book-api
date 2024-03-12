@@ -8,4 +8,16 @@ const getAllAuthors = async (req: Request, res: Response) => {
   res.status(200).json(authors);
 };
 
-export const authorController = { getAllAuthors };
+const createAuthor = async (req: Request, res: Response) => {
+  const { name, nationality, dateOfBirth } = req.body;
+  const author = await prisma.author.create({
+    data: {
+      dateOfBirth,
+      name,
+      nationality,
+    },
+  });
+  res.status(201).json(author);
+};
+
+export const authorController = { getAllAuthors, createAuthor };
