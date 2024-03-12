@@ -36,4 +36,25 @@ const deleteBook = async (req: Request, res: Response) => {
   res.status(200).json(deletedBook);
 };
 
-export const booksController = { getAllBooks, createBook, deleteBook };
+const updateBook = async (req: Request, res: Response) => {
+  const { title, description, pages, createdAt, authorId, id } = req.body;
+  const updatedBook = await prisma.book.update({
+    where: {
+      id,
+    },
+    data: {
+      description,
+      pages,
+      title,
+      authorId,
+      createdAt,
+    },
+  });
+  res.status(200).json(updatedBook);
+};
+export const booksController = {
+  getAllBooks,
+  createBook,
+  deleteBook,
+  updateBook,
+};
