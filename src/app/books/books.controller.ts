@@ -5,9 +5,21 @@ const prisma = new PrismaClient();
 
 const getAllBooks = async (req: Request, res: Response) => {
   const books = await prisma.book.findMany({});
-  console.log({ books });
-
   res.status(200).json(books);
 };
 
-export const booksController = { getAllBooks };
+const createBook = async (req: Request, res: Response) => {
+  const { title, description, pages, createdAt, authorId } = req.body;
+  const createdBook = await prisma.book.create({
+    data: {
+      title,
+      description,
+      pages,
+      createdAt,
+      authorId,
+    },
+  });
+  return res.status(201).json(createdBook);
+};
+
+export const booksController = { getAllBooks, createBook };
